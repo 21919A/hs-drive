@@ -23,7 +23,20 @@ def autonomous_function():
 
     log(("Competition", "competition"), "autonomous_begin")
 
-    # Add autonomous logic here
+    # Keep driving until a collision
+    while not inertial.latest_collision:
+
+        # Drive forward and backward to the same position
+        for setpoint in [1000, 1000, -1000, -1000]:
+            pid_driver.drive(setpoint)
+
+            # Give inertial sensor time to settle
+            sleep(1000, TimeUnits.MSEC)
+
+            reset_odometry_to_gps()
+
+            if inertial.latest_collision:
+                break
 
     log(("Competition", "competition"), "autonomous_end")
 
