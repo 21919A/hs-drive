@@ -28,12 +28,12 @@ def autonomous_function():
 
         # Drive forward and backward to the same position
         for setpoint in [1000, 1000, -1000, -1000]:
-            pid_driver.drive(setpoint)
+            trigger_driver.drive(setpoint)
 
             # Give inertial sensor time to settle
             sleep(1000, TimeUnits.MSEC)
 
-            reset_odometry_to_gps()
+            reset_robot_position_and_heading_to_gps()
 
             if inertial.latest_collision:
                 break
